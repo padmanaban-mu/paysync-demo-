@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  role         String    @default("EMPLOYEE") // ADMIN or EMPLOYEE
+  createdAt    DateTime  @default(now())
+  Employee     Employee?
+}
+
+model Employee {
+  id          String       @id @default(cuid())
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName   String
+  lastName    String
+  department  String
+  designation String
+  baseSalary  Float
+  joinDate    DateTime
+  bankAccount String
+  attendances Attendance[]
+  payrolls    Payroll[]
+}
+
+model Attendance {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date        DateTime
+  status      String   // PRESENT, ABSENT, HALF_DAY, LEAVE
+  hoursWorked Float    @default(0)
+}
+
+model Payroll {
+  id          String   @id @default(cuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  month       Int
+  year        Int
+  baseAmount  Float
+  bonuses     Float    @default(0)
+  deductions  Float    @default(0)
+  netSalary   Float
+  status      String   @default("PENDING") // PENDING, PAID
+  anomalyFlag Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
