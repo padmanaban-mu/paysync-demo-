@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PaySync — Payroll & Workforce Management
 
-## Getting Started
+PaySync is a Next.js payroll/workforce application codebase with administrator and employee experiences. Its repository includes attendance and payroll management, employee APIs, authentication, a Prisma schema, and an employee-facing simulator page.
 
-First, run the development server:
+## Main areas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Admin workspace:** dashboard, employee records, attendance, and payroll.
+- **Employee workspace:** employee dashboard and a payroll simulator page.
+- **API routes:** authentication, employee profile, employee records, attendance, and payroll.
+- **Shared interface:** application shell, sidebar, and command palette components.
+- **Persistence:** Prisma ORM with SQLite configured in the schema.
+
+These are codebase capabilities inferred from the current route and component structure. Confirm their behaviour with a local run and tests before describing them as production features.
+
+## Technology
+
+| Layer | Stack |
+| --- | --- |
+| Application | Next.js App Router, React |
+| Language | TypeScript |
+| Data access | Prisma |
+| Local database | SQLite |
+| Authentication | NextAuth, bcryptjs |
+| UI utilities | Tailwind CSS, Framer Motion, cmdk, Lucide React |
+| Visualisation | Recharts |
+
+## Repository structure
+
+```text
+.
+├── prisma/
+│   ├── schema.prisma
+│   └── seed.ts
+└── src/
+    ├── app/
+    │   ├── admin/
+    │   │   ├── attendance/
+    │   │   ├── dashboard/
+    │   │   ├── employees/
+    │   │   └── payroll/
+    │   ├── employee/
+    │   │   ├── dashboard/
+    │   │   └── simulator/
+    │   ├── api/
+    │   │   ├── attendance/
+    │   │   ├── auth/
+    │   │   ├── employee/
+    │   │   ├── employees/
+    │   │   └── payroll/
+    │   └── components/
+    ├── lib/
+    └── middleware.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js compatible with the installed Next.js version
+- npm
 
-## Learn More
+### Install and configure
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git clone https://github.com/padmanaban-mu/paysync-demo-.git
+cd paysync-demo-
+npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create a local `.env` file. Configure the SQLite connection and authentication settings expected by the application:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_SECRET="replace_with_a_long_random_secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
 
-## Deploy on Vercel
+Prepare Prisma and run the application:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx prisma generate
+npx prisma db push
+npm run dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Visit [http://localhost:3000](http://localhost:3000).
+
+## Responsible demo data
+
+Payroll software handles sensitive employee, compensation, attendance, and potentially banking information. Use fabricated records for demonstrations. Never commit real personal data, passwords, API keys, or production database backups. Review access control, validation, payroll rules, auditability, and secure deployment before using real employee data.
+
+## License
+
+No license file was identified during this documentation update. Check licensing before reuse or redistribution.
