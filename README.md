@@ -1,30 +1,29 @@
 # PaySync — Payroll & Workforce Management
 
-PaySync is a Next.js payroll/workforce application codebase with administrator and employee experiences. Its repository includes attendance and payroll management, employee APIs, authentication, a Prisma schema, and an employee-facing simulator page.
+PaySync is a Next.js application with admin and employee-facing areas for payroll and workforce workflows. The repository includes pages and API routes for employees, attendance, and payroll, along with authentication and a Prisma data layer.
 
-## Main areas
+## What is included
 
-- **Admin workspace:** dashboard, employee records, attendance, and payroll.
-- **Employee workspace:** employee dashboard and a payroll simulator page.
-- **API routes:** authentication, employee profile, employee records, attendance, and payroll.
-- **Shared interface:** application shell, sidebar, and command palette components.
-- **Persistence:** Prisma ORM with SQLite configured in the schema.
+- Admin dashboard, employee records, attendance, and payroll pages
+- Employee dashboard and payroll simulator page
+- API route groups for authentication, employee information, attendance, and payroll
+- Shared UI components, including the application shell and navigation
+- Prisma schema with SQLite configured for local development
 
-These are codebase capabilities inferred from the current route and component structure. Confirm their behaviour with a local run and tests before describing them as production features.
+The presence of a page or route does not by itself confirm that the workflow is production-ready. Test the relevant flows locally before relying on them.
 
-## Technology
+## Stack
 
-| Layer | Stack |
+| Area | Tools |
 | --- | --- |
-| Application | Next.js App Router, React |
-| Language | TypeScript |
-| Data access | Prisma |
+| Application | Next.js App Router, React, TypeScript |
+| Database access | Prisma |
 | Local database | SQLite |
 | Authentication | NextAuth, bcryptjs |
-| UI utilities | Tailwind CSS, Framer Motion, cmdk, Lucide React |
-| Visualisation | Recharts |
+| UI | Tailwind CSS, Framer Motion, cmdk, Lucide React |
+| Charts | Recharts |
 
-## Repository structure
+## Project layout
 
 ```text
 .
@@ -42,24 +41,14 @@ These are codebase capabilities inferred from the current route and component st
     │   │   ├── dashboard/
     │   │   └── simulator/
     │   ├── api/
-    │   │   ├── attendance/
-    │   │   ├── auth/
-    │   │   ├── employee/
-    │   │   ├── employees/
-    │   │   └── payroll/
     │   └── components/
     ├── lib/
     └── middleware.ts
 ```
 
-## Local setup
+## Run locally
 
-### Prerequisites
-
-- Node.js compatible with the installed Next.js version
-- npm
-
-### Install and configure
+Install Node.js and npm first.
 
 ```bash
 git clone https://github.com/padmanaban-mu/paysync-demo-.git
@@ -67,15 +56,15 @@ cd paysync-demo-
 npm install
 ```
 
-Create a local `.env` file. Configure the SQLite connection and authentication settings expected by the application:
+Create a local `.env` file and set the database connection and authentication values used by the application:
 
 ```env
 DATABASE_URL="file:./dev.db"
-NEXTAUTH_SECRET="replace_with_a_long_random_secret"
+NEXTAUTH_SECRET="use_a_long_random_secret"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 
-Prepare Prisma and run the application:
+Generate the Prisma client, create/update the local schema, and start the development server:
 
 ```bash
 npx prisma generate
@@ -83,12 +72,12 @@ npx prisma db push
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
-## Responsible demo data
+## Notes before using real data
 
-Payroll software handles sensitive employee, compensation, attendance, and potentially banking information. Use fabricated records for demonstrations. Never commit real personal data, passwords, API keys, or production database backups. Review access control, validation, payroll rules, auditability, and secure deployment before using real employee data.
+Payroll and attendance systems handle sensitive employee and compensation information. Use fabricated data for demos. Keep credentials and database backups out of Git, and review authentication, authorisation, input validation, payroll calculations, audit logging, and secure deployment before connecting real employee records.
 
 ## License
 
-No license file was identified during this documentation update. Check licensing before reuse or redistribution.
+No license file was identified for this repository during this update. Add one if you want to define reuse and redistribution terms.
